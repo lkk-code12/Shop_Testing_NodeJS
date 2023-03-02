@@ -1,0 +1,25 @@
+const express = require('express');
+const app = express();
+
+app.get('/', () => console.log('Hello this is GET method'));
+
+app.get('/user', (req, res, next) => res.status(200).json({ 'Message': 'Get User' }));
+
+app.post('/user', (req, res, next) => res.status(200).json({ 'Message': 'Post User' }));
+
+app.patch('/user/:id/:name', (req, res, next) => {
+    let userId = req.params.id;
+    let userName = req.params.name;
+
+    res.status(200).json({ 'Message': `User id is ${userId} and name is ${userName}` })
+});
+
+app.delete('/user/:id/:brand', (req, res, next) => {
+    let id = req.params.id;
+    let brand = req.params.brand;
+    res.status(200).json({ 'Message': `Delete id is ${id} and brand is ${brand}` })
+});
+
+app.get('*', (req, res, next) => res.json({ Msg: 'There is no data' }));
+
+app.listen(3000, console.log('Server is running at port 3000'));

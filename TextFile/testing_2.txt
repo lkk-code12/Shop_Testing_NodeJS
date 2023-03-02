@@ -1,0 +1,55 @@
+let brands = [
+    { 'id': 1, 'name': 'Toyota', 'country': 'Japan' },
+    { 'id': 2, 'name': 'BMW', 'country': 'Germany' },
+    { 'id': 3, 'name': 'Range Rover', 'country': 'England' },
+    { 'id': 4, 'name': 'Hyundai', 'country': 'South Korea' },
+    { 'id': 5, 'name': 'Ford', 'country': 'USA' }
+];
+
+app.get('/brands', (req, res, next) => {
+    res.status(200).json(brands);
+});
+
+app.get('/brands/:search_id', (req, res, next) => {
+    let search_id = req.params.id;
+    let search_brand = brands.find(a => a.search_id == id);
+    if (search_brand) {
+        res.status(200).json(search_brand);
+    } else {
+        res.status(200).json({ 'Alert': `There is no brand with ID ${id}` });
+    }
+});
+
+app.post('/brands', (req, res, next) => {
+    let id = req.body.id;
+    let brand = req.body.brand;
+    let country = req.body.country;
+
+    let new_brand = {
+        id: id,
+        brand: brand,
+        country: country
+    };
+    // console.log(new_brand);
+
+    brands.push(new_brand);
+    res.status(200).json(brands);
+});
+
+app.patch('/brands/:id', (req, res, next) => {
+    let id = req.params.id;
+    let search_id = brands.find(a => a.id == id);
+    if (search_id) {
+        search_id.name = req.body.name;
+        search_id.country = req.body.country;
+        res.json(brands);
+    } else {
+        res.json({ "Notice": `There is no ID ${id}` });
+    }
+});
+
+app.delete('/brands/:id', (req, res, next) => {
+    let id = req.params.id;
+    let delete_user = brands.filter(a => a.id != id);
+    res.json(delete_user);
+});
